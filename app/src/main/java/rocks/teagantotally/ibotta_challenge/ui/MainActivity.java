@@ -5,7 +5,8 @@ import android.os.Bundle;
 
 import rocks.teagantotally.ibotta_challenge.R;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity
+          extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
