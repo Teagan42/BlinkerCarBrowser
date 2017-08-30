@@ -27,5 +27,10 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile group: 'org.greenrobot', name: 'eventbus', version: '3.0.0'
+    // Dagger 2.0 Deps
+    compile group: 'com.google.dagger', name: 'dagger', version: '2.4'
+    compile group: 'com.google.dagger', name: 'dagger-compiler', version: '2.4'
+    provided 'org.glassfish:javax.annotation:10.0-b28'
     testCompile 'junit:junit:4.12'
 }
