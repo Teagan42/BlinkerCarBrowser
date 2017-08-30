@@ -56,3 +56,6 @@ freeline_project_description.json
 
 # IntelliJ
 .idea/
+
+# MacOS
+**/.DS_Store
