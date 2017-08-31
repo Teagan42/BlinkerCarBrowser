@@ -47,6 +47,13 @@ public abstract class Router {
                       OffersListFragment.class);
     }
 
+    /**
+     * Registers a route
+     *
+     * @param route    The uri for the route
+     * @param activity The activity to load
+     * @param fragment The fragment to display
+     */
     public static void registerRoute(String route,
                                      Class activity,
                                      Class fragment) {

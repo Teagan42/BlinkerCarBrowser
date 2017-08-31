@@ -75,6 +75,12 @@ public class RetailerListFragment
         getBaseActivity().setTitle("Your Retailers");
     }
 
+    /**
+     * Event subscription for retailer list retrieval request
+     *
+     * @param event Event data
+     * @// TODO: 8/31/17 This should be moved to a service
+     */
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onEvent(RetrieveRetailersEvent event) {
         List<Retailer> retailers =
@@ -87,6 +93,12 @@ public class RetailerListFragment
         }
     }
 
+    /**
+     * Event subscription for retailer store location retrieval request
+     *
+     * @param event Event data
+     * @// TODO: 8/31/17 This should be moved to a service
+     */
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onEvent(RetrieveStoresEvent event) {
         List<Store> stores =
@@ -98,6 +110,11 @@ public class RetailerListFragment
         }
     }
 
+    /**
+     * Event subscription for data store error events
+     *
+     * @param event Event data
+     */
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onEvent(ErrorEvent event) {
         if (!isTop()) {

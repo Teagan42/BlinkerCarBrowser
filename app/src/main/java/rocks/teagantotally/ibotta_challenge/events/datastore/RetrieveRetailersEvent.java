@@ -17,10 +17,16 @@ public class RetrieveRetailersEvent
         this.limit = limit;
     }
 
+    /**
+     * @return The number of records to skip
+     */
     public int getOffset() {
         return offset;
     }
 
+    /**
+     * @return The number of records to return
+     */
     public int getLimit() {
         return limit;
     }

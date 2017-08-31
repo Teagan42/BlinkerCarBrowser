@@ -20,7 +20,7 @@
             android:animateLayoutChanges="false"
             android:background="@android:color/darker_gray"
             app:itemViewBinder="@{vm.itemBinder}"
-            app:items="@{vm.retailers}"
+            app:items="@{vm.items}"
             app:layoutManager="@{vm.layoutManager}" />
 
     </android.support.v4.widget.SwipeRefreshLayout>

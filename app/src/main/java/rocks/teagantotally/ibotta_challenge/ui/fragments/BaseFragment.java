@@ -13,7 +13,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import rocks.teagantotally.ibotta_challenge.di.Injector;
 import rocks.teagantotally.ibotta_challenge.events.BottomSheetEvent;
-import rocks.teagantotally.ibotta_challenge.events.NavigationEvent;
 import rocks.teagantotally.ibotta_challenge.ui.BaseActivity;
 import rocks.teagantotally.ibotta_challenge.ui.utils.KeyboardUtil;
 
@@ -39,6 +38,9 @@ public abstract class BaseFragment
         return isPaused;
     }
 
+    /**
+     * Pops the backstack
+     */
     protected void goBack() {
         KeyboardUtil.hideKeyboard(getActivity());
         getBaseActivity().onBackPressed();
@@ -78,6 +80,9 @@ public abstract class BaseFragment
         setRetainInstance(true);
     }
 
+    /**
+     * @return The lifecycle event to unregister this object from the event bus
+     */
     protected LifecycleEvent getUnregisterLifecycleEvent() {
         return DEFAULT_UNREGISTER_LIFECYCLE_EVENT;
     }
@@ -98,21 +103,25 @@ public abstract class BaseFragment
         super.onDestroy();
     }
 
-
+    /**
+     * Unregisters this object from the event bus
+     */
     private void unregisterEventBus() {
         if (eventBus != null && eventBus.isRegistered(this)) {
             eventBus.unregister(this);
         }
     }
 
-    protected void navigateTo(String to) {
-        new NavigationEvent(to);
-    }
-
+    /**
+     * @return The base activity
+     */
     protected BaseActivity getBaseActivity() {
         return (BaseActivity) getActivity();
     }
 
+    /**
+     * @return True if this fragment is the top most on the stack
+     */
     public boolean isTop() {
         FragmentManager fragmentManager;
         String tag;
@@ -135,6 +144,11 @@ public abstract class BaseFragment
                                  .equals(tag);
     }
 
+    /**
+     * Event subscription for bottom sheet dialog events
+     *
+     * @param event Event data
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(BottomSheetEvent event) {
         BindableBottomSheetFragment bottomSheetFragment = new BindableBottomSheetFragment();

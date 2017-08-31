@@ -34,24 +34,39 @@ public class OfferVM
         this.offer = offer;
     }
 
+    /**
+     * @return Whether the offer is valid
+     */
     public boolean isValid() {
         return offer.active && !offer.expired;
     }
 
+    /**
+     * @return The name of the offer
+     */
     public String getName() {
         return offer.name;
     }
 
+    /**
+     * @return The description of the offer
+     */
     public String getDescription() {
         return offer.description;
     }
 
+    /**
+     * @return The visibiliity of the inactive reason view
+     */
     public int getInactiveReasonVisibility() {
         return isValid()
                ? View.GONE
                : View.VISIBLE;
     }
 
+    /**
+     * @return The reason for being inactive
+     */
     public String getInactiveReason() {
         if (offer.expired) {
             return "EXPIRED";
@@ -62,6 +77,9 @@ public class OfferVM
         return null;
     }
 
+    /**
+     * @return The offer amount
+     */
     public String getAmount() {
         return NumberFormat.getCurrencyInstance()
                            .format(offer.amount);

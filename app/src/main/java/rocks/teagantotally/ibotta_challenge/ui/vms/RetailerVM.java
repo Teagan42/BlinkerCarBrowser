@@ -59,18 +59,30 @@ public class RetailerVM
         this.context = context;
     }
 
+    /**
+     * @return The retailer name
+     */
     public String getName() {
         return retailer.name;
     }
 
+    /**
+     * @return Click handler for locations
+     */
     public View.OnClickListener getLocationsClickListener() {
         return locationsClickListener;
     }
 
+    /**
+     * @return The click handler for offers
+     */
     public View.OnClickListener getOffersClickListener() {
         return offersClickListener;
     }
 
+    /**
+     * @return The retailer icon url
+     */
     public String getIconUrl() {
         return retailer.iconUrl;
     }

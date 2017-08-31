@@ -30,6 +30,12 @@ public abstract class ImageViewBindingAdapters {
 
     private static final int NOT_SET = 0;
 
+    /**
+     * Sets the image view's drawable
+     *
+     * @param view               View to populate
+     * @param drawableResourceId Drawable resource identifier
+     */
     @BindingAdapter({"drawable"})
     public static void setDrawable(ImageView view,
                                    @DrawableRes int drawableResourceId) {
@@ -40,6 +46,14 @@ public abstract class ImageViewBindingAdapters {
                                                         drawableResourceId));
     }
 
+    /**
+     * Loads an image into the specified view
+     *
+     * @param view     View to load image into
+     * @param imageUrl Url to the image resource
+     * @param width    The target width in pixels
+     * @param height   The target height in pixesl
+     */
     @BindingAdapter({"imageUrl",
                      "imageWidth",
                      "imageHeight"})
@@ -55,6 +69,15 @@ public abstract class ImageViewBindingAdapters {
                      height);
     }
 
+    /**
+     * Loads an image into the specified view
+     *
+     * @param view        View to load image into
+     * @param imageUrl    Url to the image resource
+     * @param placeholder Placeholder drawable
+     * @param width       The target width in pixels
+     * @param height      The target height in pixels
+     */
     @BindingAdapter({"imageUrl",
                      "placeholder",
                      "imageWidth",

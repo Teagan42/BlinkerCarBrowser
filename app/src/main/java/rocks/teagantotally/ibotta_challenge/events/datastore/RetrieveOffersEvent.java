@@ -14,6 +14,9 @@ public class RetrieveOffersEvent
         this.retailerId = retailerId;
     }
 
+    /**
+     * @return The id of the retailer to retrieve offers
+     */
     public long getRetailerId() {
         return retailerId;
     }

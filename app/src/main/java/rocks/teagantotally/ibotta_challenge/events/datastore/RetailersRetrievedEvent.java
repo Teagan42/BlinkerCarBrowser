@@ -27,10 +27,16 @@ public class RetailersRetrievedEvent
         this.retailers = retailers;
     }
 
+    /**
+     * @return The event that caused the retrieval
+     */
     public RetrieveRetailersEvent getRetrieveEvent() {
         return retrieveEvent;
     }
 
+    /**
+     * @return The retailers returned by the query
+     */
     public List<Retailer> getRetailers() {
         return retailers;
     }

@@ -21,26 +21,50 @@ public class BindableBottomSheetFragment
     Object viewModel;
     ViewDataBinding binding;
 
+    /**
+     * @return The layout resource identifier to inflate
+     */
     public int getLayoutResourceIdentifier() {
         return layoutResourceIdentifier;
     }
 
+    /**
+     * Set the layout resource identifier to inflate
+     *
+     * @param layoutResourceIdentifier Layout resource identifier
+     */
     public void setLayoutResourceIdentifier(int layoutResourceIdentifier) {
         this.layoutResourceIdentifier = layoutResourceIdentifier;
     }
 
+    /**
+     * @return The binding variable identifier to populate
+     */
     public int getBindingVariableIdentifier() {
         return bindingVariableIdentifier;
     }
 
+    /**
+     * Set the binding variable identifier
+     *
+     * @param bindingVariableIdentifier The binding identifer to populate
+     */
     public void setBindingVariableIdentifier(int bindingVariableIdentifier) {
         this.bindingVariableIdentifier = bindingVariableIdentifier;
     }
 
+    /**
+     * @return The view model
+     */
     public Object getViewModel() {
         return viewModel;
     }
 
+    /**
+     * Set the view model
+     *
+     * @param viewModel View model
+     */
     public void setViewModel(Object viewModel) {
         this.viewModel = viewModel;
     }

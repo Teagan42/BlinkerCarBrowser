@@ -25,15 +25,24 @@ public class BottomSheetEvent
         this.viewModel = viewModel;
     }
 
+    /**
+     * @return The layout resource identifier to inflate
+     */
     @LayoutRes
     public int getLayoutResourceIdentifier() {
         return layoutResourceIdentifier;
     }
 
+    /**
+     * @return The binding variable identifier to populate
+     */
     public int getBindingVariableIdentifier() {
         return bindingVariableIdentifier;
     }
 
+    /**
+     * @return The view model to populate the view with
+     */
     public Object getViewModel() {
         return viewModel;
     }

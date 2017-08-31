@@ -27,10 +27,16 @@ public class StoresRetrievedEvent
         this.stores = stores;
     }
 
+    /**
+     * @return The event that caused the retrieval
+     */
     public RetrieveStoresEvent getRetrieveEvent() {
         return retrieveEvent;
     }
 
+    /**
+     * @return The stores returned by the query
+     */
     public List<Store> getStores() {
         return stores;
     }

@@ -27,10 +27,16 @@ public class OffersRetrievedEvent
         this.offers = offers;
     }
 
+    /**
+     * @return The event that caused the retrieval
+     */
     public RetrieveOffersEvent getRetrieveEvent() {
         return retrieveEvent;
     }
 
+    /**
+     * @return The list of offers returned by the query
+     */
     public List<Offer> getOffers() {
         return offers;
     }

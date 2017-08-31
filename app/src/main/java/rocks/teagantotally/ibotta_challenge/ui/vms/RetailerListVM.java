@@ -10,8 +10,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 import rocks.teagantotally.ibotta_challenge.datastore.models.Retailer;
 import rocks.teagantotally.ibotta_challenge.events.datastore.RetailersRetrievedEvent;
@@ -26,8 +24,6 @@ public class RetailerListVM
           extends BaseListVM<BaseObservable> {
     private static final int LIMIT = 40;
 
-    private List<BaseObservable> retailers;
-    private boolean isRefreshing;
     private SwipeRefreshLayout.OnRefreshListener onRefreshListener =
               new SwipeRefreshLayout.OnRefreshListener() {
                   @Override
@@ -54,59 +50,35 @@ public class RetailerListVM
         onRefreshListener.onRefresh();
     }
 
-    public List<BaseObservable> getRetailers() {
-        return retailers;
-    }
-
-    public void setRetailers(List<BaseObservable> retailers) {
-        if (Objects.equals(this.retailers,
-                           retailers)) {
-            return;
-        }
-        this.retailers = retailers;
-        notifyChange();
-    }
-
-    public SwipeRefreshLayout.OnRefreshListener getOnRefreshListener() {
-        return onRefreshListener;
-    }
-
-    public boolean isRefreshing() {
-        return isRefreshing;
-    }
-
-    public void setRefreshing(boolean refreshing) {
-        if (isRefreshing == refreshing) {
-            return;
-        }
-        isRefreshing = refreshing;
-        notifyChange();
-    }
-
     @Override
     public SwipeRefreshLayout.OnRefreshListener getRefreshListener() {
         return onRefreshListener;
     }
 
+    /**
+     * Event subscription for retailers retrieved event
+     *
+     * @param event Event data
+     */
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onEvent(RetailersRetrievedEvent event) {
         if (event.getRetrieveEvent()
                  .getOffset() == 0) {
-            setRetailers(new ArrayList<BaseObservable>());
-        } else if (retailers.get(retailers.size() - 1) instanceof LoadMoreVM) {
-            retailers.remove(retailers.size() - 1);
+            setItems(new ArrayList<BaseObservable>());
+        } else if (getItems().get(getItems().size() - 1) instanceof LoadMoreVM) {
+            remove(getItems().size() - 1);
         }
         for (Retailer retailer : event.getRetailers()) {
-            retailers.add(new RetailerVM(retailer,
-                                         context,
-                                         eventBus));
+            addItem(new RetailerVM(retailer,
+                                   context,
+                                   eventBus));
         }
 
         if (event.getRetailers()
                  .size() == event.getRetrieveEvent()
                                  .getLimit()) {
-            retailers.add(new LoadMoreVM(new RetrieveRetailersEvent(retailers.size(),
-                                                                    LIMIT)));
+            addItem(new LoadMoreVM(new RetrieveRetailersEvent(getItems().size(),
+                                                              LIMIT)));
         }
 
         notifyChange();

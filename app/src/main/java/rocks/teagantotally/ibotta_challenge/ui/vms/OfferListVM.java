@@ -10,8 +10,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 import rocks.teagantotally.ibotta_challenge.datastore.models.Offer;
 import rocks.teagantotally.ibotta_challenge.datastore.models.Retailer;
@@ -30,7 +29,6 @@ public class OfferListVM
 
     private Retailer retailer;
     private Context context;
-    private List<OfferVM> offers = new ArrayList<>();
     private ProgressDialogNotificationEvent progressDialogNotificationEvent;
     private RetrieveOffersEvent retrieveOffersEvent;
 
@@ -62,40 +60,58 @@ public class OfferListVM
         progressDialogNotificationEvent = null;
     }
 
+    /**
+     * @return The retailer's name
+     */
     public String retailerName() {
         return retailer.name;
     }
 
-    public List<OfferVM> getOffers() {
-        return offers;
-    }
-
+    /**
+     * @return Visibility of the empty state view
+     */
     public int getEmptyStateVisibility() {
-        return offers.isEmpty()
+        return getItems().isEmpty()
                ? View.VISIBLE
                : View.GONE;
     }
 
+    /**
+     * @return Visibility of the list
+     */
     public int getListVisibility() {
-        return offers.isEmpty()
+        return getItems().isEmpty()
                ? View.GONE
                : View.VISIBLE;
     }
 
+    /**
+     * Event subscription for offers retrieved event
+     *
+     * @param event Event data
+     */
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onEvent(OffersRetrievedEvent event) {
         dismissProgressDialog();
 
         for (Offer offer : event.getOffers()) {
-            offers.add(new OfferVM(retailer,
-                                   offer));
+            addItem(new OfferVM(retailer,
+                                offer));
         }
 
-        notifyChange();
     }
 
+    /**
+     * Event subscription for when an event is cancelled
+     *
+     * @param event Event data
+     */
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onEvent(CancelEvent event) {
+        if (!Objects.equals(event.getEventToCancel(),
+                            progressDialogNotificationEvent)) {
+            return;
+        }
         dismissProgressDialog();
     }
 

@@ -113,6 +113,12 @@ public class OffersListFragment
         progressDialogNotificationEvent = null;
     }
 
+    /**
+     * Event subscription for retailer retrieval event
+     *
+     * @param event Event data
+     * @// TODO: 8/31/17 This should be moved to a service
+     */
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onEvent(RetrieveRetailerEvent event) {
         Retailer retailer = retailerDataStore.getRetailerById(event.getRetailerId());
@@ -123,6 +129,11 @@ public class OffersListFragment
         }
     }
 
+    /**
+     * Event subscription to handle when a retailer has been retrieved
+     *
+     * @param event Event data
+     */
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onEvent(RetailerRetrievedEvent event) {
         dismissProgressDialog();
@@ -139,6 +150,12 @@ public class OffersListFragment
         setTitle();
     }
 
+    /**
+     * Event subscription to for offer retrieval event
+     *
+     * @param event Event data
+     * @// TODO: 8/31/17 This should be moved to a service
+     */
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onEvent(RetrieveOffersEvent event) {
         List<Offer> offers = offerDataStore.getOffersByRetailerId(event.getRetailerId());
@@ -149,6 +166,11 @@ public class OffersListFragment
         }
     }
 
+    /**
+     * Event subscription for data store errors
+     *
+     * @param event Event data
+     */
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onEvent(ErrorEvent event) {
         if (!isTop()) {

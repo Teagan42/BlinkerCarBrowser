@@ -14,6 +14,9 @@ public class RetrieveRetailerEvent
         this.retailerId = retailerId;
     }
 
+    /**
+     * @return The id of the retailer to retrieve
+     */
     public long getRetailerId() {
         return retailerId;
     }

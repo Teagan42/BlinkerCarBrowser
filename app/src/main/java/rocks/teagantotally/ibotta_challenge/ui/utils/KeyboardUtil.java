@@ -28,6 +28,9 @@ public class KeyboardUtil {
         }
     }
 
+    /**
+     * Enable global layout listener
+     */
     public void enable() {
         if (Build.VERSION.SDK_INT >= 19) {
             decorView.getViewTreeObserver()
@@ -35,6 +38,9 @@ public class KeyboardUtil {
         }
     }
 
+    /**
+     * Disable global layout listener
+     */
     public void disable() {
         if (Build.VERSION.SDK_INT >= 19) {
             decorView.getViewTreeObserver()
@@ -85,13 +91,13 @@ public class KeyboardUtil {
     /**
      * Helper to hide the keyboard
      *
-     * @param act
+     * @param activity Activity
      */
-    public static void hideKeyboard(Activity act) {
-        if (act != null && act.getCurrentFocus() != null) {
-            InputMethodManager inputMethodManager = (InputMethodManager) act.getSystemService(Activity.INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(act.getCurrentFocus()
-                                                          .getWindowToken(),
+    public static void hideKeyboard(Activity activity) {
+        if (activity != null && activity.getCurrentFocus() != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus()
+                                                               .getWindowToken(),
                                                        0);
         }
     }

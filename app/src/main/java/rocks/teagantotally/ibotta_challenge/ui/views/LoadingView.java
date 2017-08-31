@@ -50,22 +50,42 @@ public class LoadingView
         initialize(attrs);
     }
 
+    /**
+     * Sets the loading property
+     *
+     * @param view      Loading view
+     * @param isLoading Whether it is loading
+     */
     @BindingAdapter("loading")
     public static void setLoading(LoadingView view,
                                   boolean isLoading) {
         view.setLoading(isLoading);
     }
 
+    /**
+     * Gets the loading property
+     *
+     * @param view Loading view
+     * @return Whether the view is loading
+     */
     @InverseBindingAdapter(attribute = "loading")
     public static boolean isLoading(LoadingView view) {
         return view.isLoading();
     }
 
+    /**
+     * @return Whether the view is loading
+     */
     public boolean isLoading() {
         return this.binding.getIsLoading()
                            .get();
     }
 
+    /**
+     * Sets whether the view is loading
+     *
+     * @param isLoading Whether the view is loading
+     */
     public void setLoading(boolean isLoading) {
         if (isLoading == this.binding.getIsLoading()
                                      .get()) {

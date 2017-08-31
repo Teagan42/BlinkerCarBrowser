@@ -11,8 +11,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 import rocks.teagantotally.ibotta_challenge.datastore.models.Retailer;
 import rocks.teagantotally.ibotta_challenge.datastore.models.Store;
@@ -32,7 +30,6 @@ public class StoreListVM
           extends BaseListVM<BaseObservable> {
     private static final int LIMIT = 100;
 
-    private List<StoreVM> stores = new ArrayList<>();
     private Retailer retailer;
     private ProgressDialogNotificationEvent progressDialogNotificationEvent;
 
@@ -51,31 +48,18 @@ public class StoreListVM
         progressDialogNotificationEvent.post();
     }
 
-    public List<StoreVM> getStores() {
-        return stores;
-    }
-
-    public void setStores(List<StoreVM> stores) {
-        if (Objects.equals(this.stores,
-                           stores)) {
-            return;
-        }
-        this.stores = stores;
-        notifyChange();
-    }
-
     public String getRetailerName() {
         return retailer.name;
     }
 
     public int getListVisibility() {
-        return stores.isEmpty()
+        return getItems().isEmpty()
                ? View.GONE
                : View.VISIBLE;
     }
 
     public int getEmptyStateVisibility() {
-        return stores.isEmpty()
+        return getItems().isEmpty()
                ? View.VISIBLE
                : View.GONE;
     }
@@ -92,20 +76,30 @@ public class StoreListVM
         return null;
     }
 
+    /**
+     * Event subscription for stores retrieved event
+     *
+     * @param event Event data
+     */
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onEvent(StoresRetrievedEvent event) {
         dismissProgressDialog();
-        if (stores == null) {
-            stores = new ArrayList<>();
+        if (getItems() == null) {
+            setItems(new ArrayList<BaseObservable>());
         }
         for (Store store : event.getStores()) {
-            stores.add(new StoreVM(retailer,
-                                   store));
+            addItem(new StoreVM(retailer,
+                                store));
         }
 
         notifyChange();
     }
 
+    /**
+     * Event subscription for data store error event
+     *
+     * @param event Event data
+     */
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onEvent(ErrorEvent event) {
         dismissProgressDialog();
