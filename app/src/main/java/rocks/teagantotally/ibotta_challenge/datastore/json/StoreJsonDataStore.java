@@ -23,6 +23,7 @@ import javax.inject.Inject;
 import rocks.teagantotally.ibotta_challenge.R;
 import rocks.teagantotally.ibotta_challenge.datastore.StoreDataStore;
 import rocks.teagantotally.ibotta_challenge.datastore.models.Store;
+import rocks.teagantotally.ibotta_challenge.events.ErrorEvent;
 import rocks.teagantotally.ibotta_challenge.util.GsonUtil;
 
 /**
@@ -59,7 +60,7 @@ public class StoreJsonDataStore
         try {
             stores = loadJson();
         } catch (IOException e) {
-            e.printStackTrace();
+            new ErrorEvent(e).post();
             return null;
         }
 
@@ -73,7 +74,7 @@ public class StoreJsonDataStore
         try {
             stores = loadJson();
         } catch (IOException e) {
-            e.printStackTrace();
+            new ErrorEvent(e).post();
             return null;
         }
 
@@ -94,7 +95,7 @@ public class StoreJsonDataStore
         try {
             stores = loadJson();
         } catch (IOException e) {
-            e.printStackTrace();
+            new ErrorEvent(e).post();
             return null;
         }
 

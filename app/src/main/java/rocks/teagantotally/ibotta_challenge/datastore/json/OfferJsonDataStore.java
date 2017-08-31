@@ -23,6 +23,7 @@ import rocks.teagantotally.ibotta_challenge.R;
 import rocks.teagantotally.ibotta_challenge.datastore.OfferDataStore;
 import rocks.teagantotally.ibotta_challenge.datastore.models.Offer;
 import rocks.teagantotally.ibotta_challenge.datastore.models.Retailer;
+import rocks.teagantotally.ibotta_challenge.events.ErrorEvent;
 
 /**
  * Created by tglenn on 8/30/17.
@@ -58,7 +59,7 @@ public class OfferJsonDataStore
         try {
             offers = loadJson();
         } catch (IOException e) {
-            e.printStackTrace();
+            new ErrorEvent(e).post();
             return null;
         }
 
@@ -69,6 +70,10 @@ public class OfferJsonDataStore
     @Override
     public List<Offer> getOffersByRetailerId(long retailerId) {
         Map<Long, List<Offer>> offerMap = getOffersByRetailerId(new long[]{retailerId});
+
+        if (offerMap == null) {
+            return null;
+        }
 
         if (!offerMap.containsKey(retailerId)) {
             return new ArrayList<>();
@@ -86,7 +91,7 @@ public class OfferJsonDataStore
         try {
             offers = loadJson();
         } catch (IOException e) {
-            e.printStackTrace();
+            new ErrorEvent(e).post();
             return null;
         }
 

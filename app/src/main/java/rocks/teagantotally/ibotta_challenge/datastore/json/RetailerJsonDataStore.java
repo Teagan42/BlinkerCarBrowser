@@ -15,6 +15,7 @@ import rocks.teagantotally.ibotta_challenge.R;
 import rocks.teagantotally.ibotta_challenge.datastore.RetailerDataStore;
 import rocks.teagantotally.ibotta_challenge.datastore.models.Retailer;
 import rocks.teagantotally.ibotta_challenge.datastore.models.Store;
+import rocks.teagantotally.ibotta_challenge.events.ErrorEvent;
 
 /**
  * Created by tglenn on 8/30/17.
@@ -46,16 +47,16 @@ public class RetailerJsonDataStore
     @Override
     public List<Retailer> getRetailers(int offset,
                                        int limit) {
+        List<Retailer> retailers;
         try {
-            List<Retailer> retailers = loadJson();
-
-            return retailers.subList(offset,
-                                     offset + limit);
+            retailers = loadJson();
         } catch (IOException e) {
-            e.printStackTrace();
+            new ErrorEvent(e).post();
+            return null;
         }
 
-        return null;
+        return retailers.subList(offset,
+                                 offset + limit);
     }
 
     @Override
@@ -64,7 +65,7 @@ public class RetailerJsonDataStore
         try {
             retailers = loadJson();
         } catch (IOException e) {
-            e.printStackTrace();
+            new ErrorEvent(e).post();
             return null;
         }
 
@@ -84,7 +85,7 @@ public class RetailerJsonDataStore
         try {
             retailers = loadJson();
         } catch (IOException e) {
-            e.printStackTrace();
+            new ErrorEvent(e).post();
             return null;
         }
 
