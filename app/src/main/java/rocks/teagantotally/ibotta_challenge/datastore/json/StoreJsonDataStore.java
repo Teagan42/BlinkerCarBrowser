@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,10 +34,14 @@ public class StoreJsonDataStore
 
     @Inject
     Context context;
+    @Inject
+    EventBus eventBus;
 
     @Inject
-    public StoreJsonDataStore(Context context) {
+    public StoreJsonDataStore(Context context,
+                              EventBus eventBus) {
         this.context = context;
+        this.eventBus = eventBus;
     }
 
     private List<Store> loadJson() throws

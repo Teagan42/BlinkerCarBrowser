@@ -3,6 +3,8 @@ package rocks.teagantotally.ibotta_challenge.datastore.json;
 import android.content.Context;
 import android.text.TextUtils;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -23,10 +25,14 @@ public class RetailerJsonDataStore
 
     @Inject
     Context context;
+    @Inject
+    EventBus eventBus;
 
     @Inject
-    public RetailerJsonDataStore(Context context) {
+    public RetailerJsonDataStore(Context context,
+                                 EventBus eventBus) {
         this.context = context;
+        this.eventBus = eventBus;
     }
 
     private List<Retailer> loadJson() throws

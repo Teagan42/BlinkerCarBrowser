@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.google.common.collect.Sets;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -30,10 +32,14 @@ public class OfferJsonDataStore
           implements OfferDataStore {
     @Inject
     Context context;
+    @Inject
+    EventBus eventBus;
 
     @Inject
-    public OfferJsonDataStore(Context context) {
+    public OfferJsonDataStore(Context context,
+                              EventBus eventBus) {
         this.context = context;
+        this.eventBus = eventBus;
     }
 
     private List<Offer> loadJson() throws
