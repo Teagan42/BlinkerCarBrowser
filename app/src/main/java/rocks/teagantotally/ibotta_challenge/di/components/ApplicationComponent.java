@@ -6,6 +6,7 @@ import dagger.Component;
 import rocks.teagantotally.ibotta_challenge.di.modules.ApplicationContextModule;
 import rocks.teagantotally.ibotta_challenge.di.modules.DataStoreModule;
 import rocks.teagantotally.ibotta_challenge.di.modules.EventBusModule;
+import rocks.teagantotally.ibotta_challenge.ui.fragments.OfferDetailFragment;
 import rocks.teagantotally.ibotta_challenge.ui.fragments.OffersListFragment;
 import rocks.teagantotally.ibotta_challenge.ui.fragments.RetailerListFragment;
 
@@ -25,4 +26,6 @@ public interface ApplicationComponent
     void inject(RetailerListFragment fragment);
 
     void inject(OffersListFragment fragment);
+
+    void inject(OfferDetailFragment fragment);
 }

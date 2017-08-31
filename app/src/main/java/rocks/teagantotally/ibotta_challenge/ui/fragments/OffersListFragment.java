@@ -22,6 +22,7 @@ import rocks.teagantotally.ibotta_challenge.datastore.RetailerDataStore;
 import rocks.teagantotally.ibotta_challenge.datastore.models.Offer;
 import rocks.teagantotally.ibotta_challenge.datastore.models.Retailer;
 import rocks.teagantotally.ibotta_challenge.di.Injector;
+import rocks.teagantotally.ibotta_challenge.events.BaseEvent;
 import rocks.teagantotally.ibotta_challenge.events.CancelEvent;
 import rocks.teagantotally.ibotta_challenge.events.ErrorEvent;
 import rocks.teagantotally.ibotta_challenge.events.NavigationEvent;
@@ -40,12 +41,17 @@ import rocks.teagantotally.ibotta_challenge.ui.vms.OfferListVM;
 public class OffersListFragment
           extends BaseFragment {
     public static final String ARG_RETAILER_ID = "retailerId";
-    public static final String ROUTE = "ibotta://offers/:" + ARG_RETAILER_ID;
+    public static final String ROUTE = "ibotta://retailers/:" + ARG_RETAILER_ID + "/offers";
 
     public static void navigateTo(Retailer retailer) {
         String route = ROUTE.replace(":" + ARG_RETAILER_ID,
                                      String.valueOf(retailer.id));
         new NavigationEvent(route).post();
+    }
+
+    // Toolbar title can only be set on main thread
+    public class SetTitleEvent extends BaseEvent {
+
     }
 
     private FragmentRetailerOffersBinding binding;
@@ -147,6 +153,11 @@ public class OffersListFragment
                                       getContext(),
                                       eventBus));
         title = "Offers for " + event.getRetailer().name;
+        new SetTitleEvent().post();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(SetTitleEvent event) {
         setTitle();
     }
 

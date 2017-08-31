@@ -119,4 +119,24 @@ public class OfferJsonDataStore
 
         return result;
     }
+
+    @Override
+    public Offer getOfferById(long offerId) {
+        List<Offer> offers;
+
+        try{
+            offers = loadJson();
+        } catch (IOException e) {
+            new ErrorEvent(e).post();
+            return null;
+        }
+
+        for (Offer offer : offers) {
+            if (offer.id == offerId) {
+                return offer;
+            }
+        }
+
+        return null;
+    }
 }

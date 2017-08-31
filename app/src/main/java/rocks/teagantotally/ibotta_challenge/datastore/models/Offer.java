@@ -73,6 +73,8 @@ public class Offer
     public float hotness;
     @SerializedName("large_url")
     public String largeUrl;
+    @SerializedName("rewards")
+    public Reward[] rewards;
     @SerializedName("launched_at")
     public Date launchedAt;
     @SerializedName("multiples")

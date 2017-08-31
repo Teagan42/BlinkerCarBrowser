@@ -19,6 +19,7 @@ import rocks.teagantotally.ibotta_challenge.events.datastore.OffersRetrievedEven
 import rocks.teagantotally.ibotta_challenge.events.datastore.RetrieveOffersEvent;
 import rocks.teagantotally.ibotta_challenge.events.notifications.ProgressDialogNotificationEvent;
 import rocks.teagantotally.ibotta_challenge.ui.binding.recyclerview.CompositeItemBinder;
+import rocks.teagantotally.ibotta_challenge.ui.handlers.ClickHandler;
 
 /**
  * Created by tglenn on 8/31/17.
@@ -44,6 +45,15 @@ public class OfferListVM
         setItemBinder(new CompositeItemBinder<BaseObservable>(
                   OfferVM.itemBinder
         ));
+        setItemClickHandler(new ClickHandler<BaseObservable>() {
+            @Override
+            public void onClick(BaseObservable item) {
+                if (item instanceof OfferVM) {
+                    OfferVM vm = (OfferVM) item;
+                    vm.setExpanded(!vm.isExpanded());
+                }
+            }
+        });
 
         progressDialogNotificationEvent = new ProgressDialogNotificationEvent("Loading offers");
         retrieveOffersEvent = new RetrieveOffersEvent(retailer.id);
@@ -95,8 +105,8 @@ public class OfferListVM
         dismissProgressDialog();
 
         for (Offer offer : event.getOffers()) {
-            addItem(new OfferVM(retailer,
-                                offer));
+            addItem(new OfferVM(offer,
+                                context));
         }
 
     }

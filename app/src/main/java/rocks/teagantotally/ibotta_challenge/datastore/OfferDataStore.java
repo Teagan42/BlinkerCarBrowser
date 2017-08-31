@@ -35,4 +35,12 @@ public interface OfferDataStore {
      * @return The map of retailer id to list of offers returned by the query
      */
     Map<Long, List<Offer>> getOffersByRetailerId(long... retailerIds);
+
+    /**
+     * Get an offer by id
+     *
+     * @param offerId Id of the offer to retrieve
+     * @return The offer that was retrieved
+     */
+    Offer getOfferById(long offerId);
 }

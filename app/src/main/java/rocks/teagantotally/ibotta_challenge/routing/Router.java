@@ -21,6 +21,7 @@ import rocks.teagantotally.ibotta_challenge.R;
 import rocks.teagantotally.ibotta_challenge.events.NavigationEvent;
 import rocks.teagantotally.ibotta_challenge.ui.ActivityContainer;
 import rocks.teagantotally.ibotta_challenge.ui.BaseActivity;
+import rocks.teagantotally.ibotta_challenge.ui.fragments.OfferDetailFragment;
 import rocks.teagantotally.ibotta_challenge.ui.fragments.OffersListFragment;
 import rocks.teagantotally.ibotta_challenge.ui.fragments.RetailerListFragment;
 
@@ -45,6 +46,9 @@ public abstract class Router {
         registerRoute(OffersListFragment.ROUTE,
                       ActivityContainer.class,
                       OffersListFragment.class);
+        registerRoute(OfferDetailFragment.ROUTE,
+                      ActivityContainer.class,
+                      OfferDetailFragment.class);
     }
 
     /**
