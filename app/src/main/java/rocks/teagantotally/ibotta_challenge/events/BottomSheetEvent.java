@@ -3,8 +3,6 @@ package rocks.teagantotally.ibotta_challenge.events;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.Objects;
 
 /**

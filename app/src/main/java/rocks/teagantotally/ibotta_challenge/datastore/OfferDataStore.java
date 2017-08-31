@@ -1,7 +1,5 @@
 package rocks.teagantotally.ibotta_challenge.datastore;
 
-import android.util.SparseArray;
-
 import java.util.List;
 import java.util.Map;
 

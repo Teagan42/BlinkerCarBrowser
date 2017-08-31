@@ -3,4 +3,10 @@
     <string name="toolbar_tag">rocks.teagantotally.android.toolbar</string>
     <string name="https">https</string>
     <string name="date_time_format">MMM d, yyyy H:mm:ss a</string>
+    <string name="no_known_locations">No Known Locations</string>
+    <string name="locations">Locations</string>
+    <string name="latitude">Latitude:</string>
+    <string name="longitude">Longitude:</string>
+    <string name="offers">Offers</string>
+    <string name="no_current_offers">No Current Offers</string>
 </resources>

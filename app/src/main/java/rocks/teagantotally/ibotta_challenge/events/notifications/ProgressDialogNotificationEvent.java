@@ -8,7 +8,7 @@ import android.support.annotation.NonNull;
 
 public class ProgressDialogNotificationEvent
           extends NotificationEvent {
-    ProgressDialogNotificationEvent(@NonNull String message) {
+    public ProgressDialogNotificationEvent(@NonNull String message) {
         super(message);
     }
 }

@@ -1,23 +1,18 @@
 package rocks.teagantotally.ibotta_challenge.ui;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.IntRange;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
@@ -41,15 +36,13 @@ import rocks.teagantotally.ibotta_challenge.events.notifications.SnackbarNotific
 import rocks.teagantotally.ibotta_challenge.routing.Router;
 import rocks.teagantotally.ibotta_challenge.ui.fragments.BaseFragment;
 import rocks.teagantotally.ibotta_challenge.ui.utils.KeyboardUtil;
-import rocks.teagantotally.ibotta_challenge.ui.vms.ToolbarVM;
 
 /**
  * Created by tglenn on 8/30/17.
  */
 
 public abstract class BaseActivity
-          extends AppCompatActivity
-          implements ScreenView {
+          extends AppCompatActivity {
 
     /**
      * @return The top most activity
@@ -132,6 +125,10 @@ public abstract class BaseActivity
         }
     }
 
+    public void setTitle(String title) {
+        getSupportActionBar().setTitle(title);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -166,15 +163,6 @@ public abstract class BaseActivity
         super.onDestroy();
     }
 
-//    @Subscribe(threadMode = ThreadMode.MAIN)
-//    public void onEvent(BottomSheetNotificationEvent event) {
-//        BindableBottomSheetFragment bottomSheetFragment = new BindableBottomSheetFragment();
-//        bottomSheetFragment.setLayoutResourceIdentifier(event.getLayoutResourceIdentifier());
-//        bottomSheetFragment.setBindingVariableIdentifier(event.getBindingVariableIdentifier());
-//        bottomSheetFragment.setViewModel(event.getViewModel());
-//        bottomSheetFragment.show(getSupportFragmentManager(),
-//                                 bottomSheetFragment.getTag());
-//    }
 //
 //    @Subscribe(threadMode = ThreadMode.MAIN)
 //    public void onEvent(final DialogNotificationEvent event) {
@@ -283,26 +271,13 @@ public abstract class BaseActivity
         }
     }
 
-    public void setToolbar(ToolbarVM vm) {
-        if (vm == null) {
-            binding.setTopToolbar(null);
-        } else {
-            binding.setTopToolbar(vm);
-        }
+    protected void navigateTo(String to) {
+        new NavigationEvent(to);
     }
 
-    protected void navigateTo(ScreenView from,
-                              String to) {
-        new NavigationEvent(from,
-                            to);
+    protected void navigateTo(Uri to) {
+        navigateTo(to.toString());
     }
-
-    protected void navigateTo(ScreenView from,
-                              Uri to) {
-        navigateTo(from,
-                   to.toString());
-    }
-
 
     @Override
     public void onBackPressed() {

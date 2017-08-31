@@ -6,6 +6,7 @@ import dagger.Component;
 import rocks.teagantotally.ibotta_challenge.datastore.OfferDataStore;
 import rocks.teagantotally.ibotta_challenge.datastore.RetailerDataStore;
 import rocks.teagantotally.ibotta_challenge.datastore.StoreDataStore;
+import rocks.teagantotally.ibotta_challenge.di.modules.ApplicationContextModule;
 import rocks.teagantotally.ibotta_challenge.di.modules.DataStoreModule;
 import rocks.teagantotally.ibotta_challenge.di.modules.EventBusModule;
 
@@ -15,6 +16,7 @@ import rocks.teagantotally.ibotta_challenge.di.modules.EventBusModule;
 
 @Singleton
 @Component(modules = {
+          ApplicationContextModule.class,
           DataStoreModule.class,
           EventBusModule.class
 })

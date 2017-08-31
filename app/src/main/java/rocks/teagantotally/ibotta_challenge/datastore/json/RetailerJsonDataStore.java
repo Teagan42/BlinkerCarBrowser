@@ -14,7 +14,7 @@ import javax.inject.Inject;
 import rocks.teagantotally.ibotta_challenge.R;
 import rocks.teagantotally.ibotta_challenge.datastore.RetailerDataStore;
 import rocks.teagantotally.ibotta_challenge.datastore.models.Retailer;
-import rocks.teagantotally.ibotta_challenge.datastore.models.Store;
+import rocks.teagantotally.ibotta_challenge.datastore.models.RetailerContainer;
 import rocks.teagantotally.ibotta_challenge.events.ErrorEvent;
 
 /**
@@ -38,10 +38,10 @@ public class RetailerJsonDataStore
 
     private List<Retailer> loadJson() throws
                                       IOException {
-        Retailer[] retailers = JsonHelper.loadJson(context,
-                                                   R.raw.stores,
-                                                   Retailer[].class);
-        return Arrays.asList(retailers);
+        RetailerContainer container = JsonHelper.loadJson(context,
+                                                          R.raw.retailers,
+                                                          RetailerContainer.class);
+        return Arrays.asList(container.retailers);
     }
 
     @Override
@@ -56,7 +56,8 @@ public class RetailerJsonDataStore
         }
 
         return retailers.subList(offset,
-                                 offset + limit);
+                                 Math.min(retailers.size() - 1,
+                                          offset + limit));
     }
 
     @Override

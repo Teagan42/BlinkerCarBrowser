@@ -1,12 +1,9 @@
 package rocks.teagantotally.ibotta_challenge.routing;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -24,7 +21,8 @@ import rocks.teagantotally.ibotta_challenge.R;
 import rocks.teagantotally.ibotta_challenge.events.NavigationEvent;
 import rocks.teagantotally.ibotta_challenge.ui.ActivityContainer;
 import rocks.teagantotally.ibotta_challenge.ui.BaseActivity;
-import rocks.teagantotally.ibotta_challenge.ui.fragments.SupportWebViewFragment;
+import rocks.teagantotally.ibotta_challenge.ui.fragments.OffersListFragment;
+import rocks.teagantotally.ibotta_challenge.ui.fragments.RetailerListFragment;
 
 /**
  * Created by tglenn on 8/30/17.
@@ -40,6 +38,23 @@ public abstract class Router {
 
     private static Map<String, Route> routeMap = new HashMap<>();
 
+    static {
+        registerRoute(RetailerListFragment.ROUTE,
+                      ActivityContainer.class,
+                      RetailerListFragment.class);
+        registerRoute(OffersListFragment.ROUTE,
+                      ActivityContainer.class,
+                      OffersListFragment.class);
+    }
+
+    public static void registerRoute(String route,
+                                     Class activity,
+                                     Class fragment) {
+        routeMap.put(route,
+                     new Route(activity,
+                               fragment));
+    }
+
     /**
      * Executes logic for a given navigation event
      *
@@ -52,21 +67,8 @@ public abstract class Router {
         String routeKey = navigationEvent.getTo();
         Route route = getRoute(navigationEvent.getTo());
         if (route == null) {
-            Uri uri = Uri.parse(navigationEvent.getTo());
-            if (uri != null && !TextUtils.isEmpty(uri.getScheme())
-                && !uri.getScheme()
-                       .equals(activity.getString(R.string.https))) {
-                //No valid route found
-                Toast.makeText(activity,
-                               "Unable to load route",
-                               Toast.LENGTH_SHORT)
-                     .show();
-                return false;
-            }
-            route = new Route(ActivityContainer.class,
-                              SupportWebViewFragment.class,
-                              buildUrlBundle(uri.toString(),
-                                             null));
+            // TODO : Web url
+            return false;
         }
 
         if (!isCurrentActivity(activity,
@@ -83,7 +85,7 @@ public abstract class Router {
                                       route);
         }
         if (!BuildConfig.DEBUG) {
-             return false;
+            return false;
         }
 
         Toast.makeText(activity,
@@ -167,15 +169,6 @@ public abstract class Router {
         }
         activity.startActivity(intent);
         return true;
-    }
-
-    private static Bundle buildUrlBundle(@NonNull String uri,
-                                         @Nullable String title) {
-        Bundle args = new Bundle();
-        args.putString(SupportWebViewFragment.URL,
-                       uri);
-
-        return args;
     }
 
     static Route getRoute(String uri) {

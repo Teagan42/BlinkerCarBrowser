@@ -10,9 +10,11 @@ public class BaseEvent {
     /**
      * Post this event to the event bus
      */
-    public void post() {
+    public BaseEvent post() {
         Injector.get()
                 .eventBus()
                 .post(this);
+
+        return this;
     }
 }

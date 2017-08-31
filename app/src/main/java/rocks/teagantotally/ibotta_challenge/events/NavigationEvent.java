@@ -4,52 +4,34 @@ import android.support.annotation.NonNull;
 
 import java.util.Objects;
 
-import rocks.teagantotally.ibotta_challenge.ui.ScreenView;
-
 /**
  * Created by tglenn on 8/30/17.
  */
 
-public class NavigationEvent {
-    private ScreenView from;
+public class NavigationEvent
+          extends BaseEvent {
     private String to;
     private boolean addToBackstack = true;
     private Integer flags;
 
-    public NavigationEvent(@NonNull ScreenView from,
-                           @NonNull String to) {
-        this(from,
-             to,
+    public NavigationEvent(@NonNull String to) {
+        this(to,
              true);
     }
 
-    public NavigationEvent(@NonNull ScreenView from,
-                           @NonNull String to,
+    public NavigationEvent(@NonNull String to,
                            boolean addToBackstack) {
-        Objects.requireNonNull(from,
-                               "From cannot be null");
         Objects.requireNonNull(to,
                                "To cannot be null");
-
-        this.from = from;
         this.to = to;
         this.addToBackstack = addToBackstack;
     }
 
-    public NavigationEvent(@NonNull ScreenView from,
-                           @NonNull String to,
+    public NavigationEvent(@NonNull String to,
                            int flags) {
-        this(from,
-             to,
+        this(to,
              false);
         this.flags = flags;
-    }
-
-    /**
-     * @return The screen we are navigating from
-     */
-    public ScreenView getFrom() {
-        return from;
     }
 
     /**

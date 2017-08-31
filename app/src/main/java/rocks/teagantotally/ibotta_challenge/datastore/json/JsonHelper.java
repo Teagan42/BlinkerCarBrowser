@@ -9,11 +9,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 
-import rocks.teagantotally.ibotta_challenge.R;
-import rocks.teagantotally.ibotta_challenge.datastore.models.Store;
 import rocks.teagantotally.ibotta_challenge.util.GsonUtil;
 
 /**
@@ -26,7 +23,7 @@ abstract class JsonHelper {
                           Class<T> clazz) throws
                                           IOException {
         InputStream is = context.getResources()
-                                .openRawResource(R.raw.stores);
+                                .openRawResource(resourceId);
         Writer writer = new StringWriter();
         char[] buffer = new char[1024];
         try {

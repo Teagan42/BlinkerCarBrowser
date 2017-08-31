@@ -14,11 +14,9 @@ import java.lang.ref.WeakReference;
 import java.util.Collection;
 import java.util.List;
 
+import rocks.teagantotally.ibotta_challenge.ui.handlers.AttachedToWindowHandler;
 import rocks.teagantotally.ibotta_challenge.ui.handlers.ClickHandler;
 import rocks.teagantotally.ibotta_challenge.ui.handlers.LongClickHandler;
-import rocks.teagantotally.ibotta_challenge.ui.handlers.ViewAttachedToWindowHandler;
-import rocks.teagantotally.ibotta_challenge.ui.handlers.ViewDetachedFromWindowHandler;
-import rocks.teagantotally.ibotta_challenge.ui.handlers.ViewRecycledHandler;
 
 
 /**
@@ -35,9 +33,6 @@ public class BindingRecyclerViewAdapter<ItemType>
     // UI Event handlers
     private ClickHandler<ItemType> clickHandler;
     private LongClickHandler<ItemType> longClickHandler;
-    private ViewAttachedToWindowHandler<ItemType> viewAttachedToWindowHandler;
-    private ViewDetachedFromWindowHandler<ItemType> viewDetachedFromWindowHandler;
-    private ViewRecycledHandler<ItemType> viewRecycledHandler;
     private LayoutInflater inflater;
     private ObservableList<ItemType> items;
     private WeakReferenceOnListChangedCallback onListChangedCallback;
@@ -103,33 +98,6 @@ public class BindingRecyclerViewAdapter<ItemType>
      */
     public void setLongClickHandler(LongClickHandler<ItemType> clickHandler) {
         this.longClickHandler = clickHandler;
-    }
-
-    /**
-     * Set the handler for when a view is attached to the window
-     *
-     * @param handler Event handler
-     */
-    public void setViewAttachedToWindowHandler(ViewAttachedToWindowHandler<ItemType> handler) {
-        this.viewAttachedToWindowHandler = handler;
-    }
-
-    /**
-     * Set the handler for when the view is detached from the window
-     *
-     * @param handler Event handler
-     */
-    public void setViewDetachedFromWindowHandler(ViewDetachedFromWindowHandler<ItemType> handler) {
-        this.viewDetachedFromWindowHandler = handler;
-    }
-
-    /**
-     * Set the handler for when a view is recycled
-     *
-     * @param handler Event handler
-     */
-    public void setViewRecycledHandler(ViewRecycledHandler<ItemType> handler) {
-        this.viewRecycledHandler = handler;
     }
 
     /**
@@ -274,6 +242,27 @@ public class BindingRecyclerViewAdapter<ItemType>
         }
 
         return false;
+    }
+
+    /**
+     * Called when a view created by this adapter has been attached to a window.
+     * <p>
+     * <p>This can be used as a reasonable signal that the view is about to be seen
+     * by the user. If the adapter previously freed any resources in
+     * {@link #onViewDetachedFromWindow(RecyclerView.ViewHolder) onViewDetachedFromWindow}
+     * those resources should be restored here.</p>
+     *
+     * @param viewHolder Holder of the view being attached
+     */
+    @Override
+    public void onViewAttachedToWindow(ViewHolder viewHolder) {
+        ItemType item = (ItemType) viewHolder.binding.getRoot()
+                                                     .getTag(ITEM_MODEL);
+        if (item instanceof AttachedToWindowHandler) {
+            ((AttachedToWindowHandler) item).onViewAttachedToWindow();
+        }
+
+        super.onViewAttachedToWindow(viewHolder);
     }
 
     static class ViewHolder

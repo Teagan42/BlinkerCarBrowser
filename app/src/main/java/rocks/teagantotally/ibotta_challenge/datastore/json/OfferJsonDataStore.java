@@ -7,7 +7,6 @@ import com.google.common.collect.Sets;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -22,7 +21,7 @@ import javax.inject.Inject;
 import rocks.teagantotally.ibotta_challenge.R;
 import rocks.teagantotally.ibotta_challenge.datastore.OfferDataStore;
 import rocks.teagantotally.ibotta_challenge.datastore.models.Offer;
-import rocks.teagantotally.ibotta_challenge.datastore.models.Retailer;
+import rocks.teagantotally.ibotta_challenge.datastore.models.OfferContainer;
 import rocks.teagantotally.ibotta_challenge.events.ErrorEvent;
 
 /**
@@ -45,10 +44,10 @@ public class OfferJsonDataStore
 
     private List<Offer> loadJson() throws
                                    IOException {
-        Offer[] offers = JsonHelper.loadJson(context,
-                                             R.raw.stores,
-                                             Offer[].class);
-        return Arrays.asList(offers);
+        OfferContainer container = JsonHelper.loadJson(context,
+                                                       R.raw.offers,
+                                                       OfferContainer.class);
+        return Arrays.asList(container.offers);
     }
 
     @Override
@@ -85,8 +84,12 @@ public class OfferJsonDataStore
     @Override
     public Map<Long, List<Offer>> getOffersByRetailerId(long... retailerIds) {
         Map<Long, List<Offer>> result = new HashMap<>();
-        Set retailerIdSet = Sets.newHashSet(retailerIds);
+        Set<Long> retailerIdSet = new HashSet<>();
         List<Offer> offers;
+
+        for (long retailerId : retailerIds) {
+            retailerIdSet.add(retailerId);
+        }
 
         try {
             offers = loadJson();
@@ -96,12 +99,15 @@ public class OfferJsonDataStore
         }
 
         for (Offer offer : offers) {
-            Set offerRetailerIdSet = Sets.newHashSet(offer.retailerIds);
+            Set<Long> offerRetailerIdSet = new HashSet<>();
+
+            for (long retailerId : offer.retailerIds) {
+                offerRetailerIdSet.add(retailerId);
+            }
+
             offerRetailerIdSet.retainAll(retailerIdSet);
 
-            Iterator iterator = offerRetailerIdSet.iterator();
-            while (iterator.hasNext()) {
-                Long retailerId = (Long) iterator.next();
+            for (Long retailerId : offerRetailerIdSet) {
                 if (!result.containsKey(retailerId)) {
                     result.put(retailerId,
                                new ArrayList<Offer>());

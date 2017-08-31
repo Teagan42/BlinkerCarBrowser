@@ -1,31 +1,28 @@
 package rocks.teagantotally.ibotta_challenge.ui.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.IntRange;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
-import android.view.View;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.EventBusException;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import rocks.teagantotally.ibotta_challenge.di.Injector;
+import rocks.teagantotally.ibotta_challenge.events.BottomSheetEvent;
 import rocks.teagantotally.ibotta_challenge.events.NavigationEvent;
 import rocks.teagantotally.ibotta_challenge.ui.BaseActivity;
-import rocks.teagantotally.ibotta_challenge.ui.ScreenView;
 import rocks.teagantotally.ibotta_challenge.ui.utils.KeyboardUtil;
-import rocks.teagantotally.ibotta_challenge.ui.vms.ToolbarVM;
 
 /**
  * Created by tglenn on 8/30/17.
  */
 
 public abstract class BaseFragment
-          extends Fragment
-          implements ScreenView {
+          extends Fragment {
     private static final String TAG = "BaseFragment";
 
     protected static final LifecycleEvent DEFAULT_UNREGISTER_LIFECYCLE_EVENT = LifecycleEvent.ONSTOP;
@@ -38,25 +35,8 @@ public abstract class BaseFragment
         ONDESTROY
     }
 
-    /**
-     * @return The view model for the toolbar
-     */
-    protected ToolbarVM getToolbarViewModel() {
-        return null;
-    }
-
     protected boolean isPaused() {
         return isPaused;
-    }
-
-    protected final void applyToolbars() {
-        if (!isTop()) {
-            return;
-        }
-        BaseActivity activity = getBaseActivity();
-        if (activity != null) {
-            activity.setToolbar(getToolbarViewModel());
-        }
     }
 
     protected void goBack() {
@@ -73,7 +53,6 @@ public abstract class BaseFragment
     @Override
     public void onResume() {
         super.onResume();
-        applyToolbars();
         isPaused = false;
     }
 
@@ -97,15 +76,6 @@ public abstract class BaseFragment
         }
 
         setRetainInstance(true);
-    }
-
-    @Override
-    public void onViewCreated(View view,
-                              @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view,
-                            savedInstanceState);
-
-        applyToolbars();
     }
 
     protected LifecycleEvent getUnregisterLifecycleEvent() {
@@ -136,8 +106,7 @@ public abstract class BaseFragment
     }
 
     protected void navigateTo(String to) {
-        new NavigationEvent(this,
-                            to);
+        new NavigationEvent(to);
     }
 
     protected BaseActivity getBaseActivity() {
@@ -164,5 +133,15 @@ public abstract class BaseFragment
                   fragmentManager.getBackStackEntryCount() - 1)
                                  .getName()
                                  .equals(tag);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(BottomSheetEvent event) {
+        BindableBottomSheetFragment bottomSheetFragment = new BindableBottomSheetFragment();
+        bottomSheetFragment.setLayoutResourceIdentifier(event.getLayoutResourceIdentifier());
+        bottomSheetFragment.setBindingVariableIdentifier(event.getBindingVariableIdentifier());
+        bottomSheetFragment.setViewModel(event.getViewModel());
+        bottomSheetFragment.show(getChildFragmentManager(),
+                                 bottomSheetFragment.getTag());
     }
 }

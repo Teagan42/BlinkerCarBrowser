@@ -30,8 +30,8 @@ public class Route {
         this.extras = extras;
     }
 
-    Route(@NonNull Class<BaseActivity> activity,
-          @NonNull Class<BaseFragment> fragment) {
+    Route(@NonNull Class activity,
+          @NonNull Class fragment) {
         this(activity,
              fragment,
              null);

@@ -2,18 +2,9 @@ package rocks.teagantotally.ibotta_challenge.datastore.json;
 
 import android.content.Context;
 
-import com.google.gson.Gson;
-
 import org.greenrobot.eventbus.EventBus;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,8 +14,8 @@ import javax.inject.Inject;
 import rocks.teagantotally.ibotta_challenge.R;
 import rocks.teagantotally.ibotta_challenge.datastore.StoreDataStore;
 import rocks.teagantotally.ibotta_challenge.datastore.models.Store;
+import rocks.teagantotally.ibotta_challenge.datastore.models.StoreContainer;
 import rocks.teagantotally.ibotta_challenge.events.ErrorEvent;
-import rocks.teagantotally.ibotta_challenge.util.GsonUtil;
 
 /**
  * Created by tglenn on 8/30/17.
@@ -47,10 +38,10 @@ public class StoreJsonDataStore
 
     private List<Store> loadJson() throws
                                    IOException {
-        Store[] stores = JsonHelper.loadJson(context,
-                                             R.raw.stores,
-                                             Store[].class);
-        return Arrays.asList(stores);
+        StoreContainer container = JsonHelper.loadJson(context,
+                                                       R.raw.stores,
+                                                       StoreContainer.class);
+        return Arrays.asList(container.stores);
     }
 
     @Override

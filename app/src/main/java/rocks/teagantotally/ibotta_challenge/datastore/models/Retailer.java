@@ -44,7 +44,7 @@ public class Retailer
     @SerializedName("name")
     public String name;
     @SerializedName("redemption_meta")
-    public RedemptionMeta[] redemptionMeta;
+    public RedemptionMeta redemptionMeta;
     @SerializedName("stores")
     public Object[] stores; // TODO : Type
     @SerializedName("verification_type")
