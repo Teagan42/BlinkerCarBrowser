@@ -34,6 +34,7 @@ dependencies {
     compile group: 'com.google.dagger', name: 'dagger', version: '2.4'
     compile group: 'com.google.dagger', name: 'dagger-compiler', version: '2.4'
     provided 'org.glassfish:javax.annotation:10.0-b28'
+    compile 'com.google.code.gson:gson:2.8.1'
     // Support libraries
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
