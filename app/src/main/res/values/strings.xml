@@ -2,4 +2,5 @@
     <string name="app_name">Ibotta-Challenge</string>
     <string name="toolbar_tag">rocks.teagantotally.android.toolbar</string>
     <string name="https">https</string>
+    <string name="date_time_format">MMM d, yyyy H:mm:ss a</string>
 </resources>
