@@ -62,6 +62,7 @@ public class RetailerListVM
      */
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onEvent(RetailersRetrievedEvent event) {
+        setRefreshing(false);
         if (event.getRetrieveEvent()
                  .getOffset() == 0) {
             setItems(new ArrayList<BaseObservable>());

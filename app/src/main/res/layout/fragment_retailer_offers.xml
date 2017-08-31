@@ -62,28 +62,21 @@
             android:visibility="@{vm.emptyStateVisibility}"
             tools:visibility="gone" />
 
-        <android.support.v4.widget.SwipeRefreshLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/location_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@android:color/background_light"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/list_title"
+            android:animateLayoutChanges="false"
+            android:background="@android:color/background_light"
             android:visibility="@{vm.listVisibility}"
-            tools:visibility="visible">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/location_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:animateLayoutChanges="false"
-                app:itemViewBinder="@{vm.itemBinder}"
-                app:items="@{vm.items}"
-                app:clickHandler="@{vm.itemClickHandler}"
-                app:layoutManager="@{vm.layoutManager}" />
-
-        </android.support.v4.widget.SwipeRefreshLayout>
+            app:clickHandler="@{vm.itemClickHandler}"
+            app:itemViewBinder="@{vm.itemBinder}"
+            app:items="@{vm.items}"
+            app:layoutManager="@{vm.layoutManager}" />
 
     </RelativeLayout>
 
