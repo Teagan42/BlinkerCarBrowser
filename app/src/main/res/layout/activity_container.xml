@@ -16,14 +16,28 @@
         android:fitsSystemWindows="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <FrameLayout
-            android:id="@+id/container"
+        <android.support.v4.widget.DrawerLayout
+            android:id="@+id/drawer_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:animateLayoutChanges="true"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:background="@android:color/white"
-            tools:layout_editor_absoluteX="0dp" />
+            android:layout_gravity="start">
+
+            <FrameLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:background="@android:color/white"
+                tools:layout_editor_absoluteX="0dp" />
+
+            <ViewStub
+                android:id="@+id/drawer_view"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="start" />
+
+        </android.support.v4.widget.DrawerLayout>
 
     </android.support.design.widget.CoordinatorLayout>
 
