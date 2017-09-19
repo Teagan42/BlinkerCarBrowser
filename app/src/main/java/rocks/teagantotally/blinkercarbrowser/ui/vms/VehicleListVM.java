@@ -27,10 +27,15 @@ import rocks.teagantotally.blinkercarbrowser.R;
 import rocks.teagantotally.blinkercarbrowser.datastore.models.Vehicle;
 import rocks.teagantotally.blinkercarbrowser.di.Injector;
 import rocks.teagantotally.blinkercarbrowser.di.scopes.ViewScope;
+import rocks.teagantotally.blinkercarbrowser.events.CancelEvent;
 import rocks.teagantotally.blinkercarbrowser.events.DialogEvent;
 import rocks.teagantotally.blinkercarbrowser.events.RetrieveResultEvent;
+import rocks.teagantotally.blinkercarbrowser.events.ServiceEvent;
+import rocks.teagantotally.blinkercarbrowser.events.notifications.ProgressDialogNotificationEvent;
+import rocks.teagantotally.blinkercarbrowser.events.notifications.SnackbarNotificationEvent;
 import rocks.teagantotally.blinkercarbrowser.events.vehicles.list.RetrieveVehicleListEvent;
 import rocks.teagantotally.blinkercarbrowser.events.vehicles.list.RetrieveVehicleListResultEvent;
+import rocks.teagantotally.blinkercarbrowser.services.VehicleService;
 import rocks.teagantotally.blinkercarbrowser.ui.binding.recyclerview.CompositeItemBinder;
 import rocks.teagantotally.blinkercarbrowser.ui.handlers.ClickHandler;
 
@@ -70,6 +75,7 @@ public class VehicleListVM
     private String query;
     private List<VehicleVM> vehicleVMs = new ArrayList<>();
     private RetrieveVehicleListEvent retrieveVehicleListEvent;
+    private ProgressDialogNotificationEvent progressDialogNotificationEvent;
     private TextWatcher queryTextChangeListener =
               new TextWatcher() {
                   private static final long DELAY_MILLISECONDS = 300;
@@ -124,8 +130,8 @@ public class VehicleListVM
 
         retrieveVehicleListEvent = new RetrieveVehicleListEvent(0,
                                                                 LIMIT);
-
-        onRefreshListener.onRefresh();
+        progressDialogNotificationEvent = new ProgressDialogNotificationEvent("Loading");
+        eventBus.post(progressDialogNotificationEvent);
     }
 
     /**
@@ -256,7 +262,32 @@ public class VehicleListVM
         setItems(itemsToPopulate);
     }
 
+    private void dismissProgressDialog() {
+        if (progressDialogNotificationEvent == null) {
+            return;
+        }
+
+        eventBus.post(new CancelEvent(progressDialogNotificationEvent));
+        progressDialogNotificationEvent = null;
+    }
+
     //region Event subscriptions
+
+    @Subscribe(threadMode = ThreadMode.ASYNC)
+    public void onEvent(ServiceEvent event) {
+        if (!Objects.equals(event.getServiceTypeClass(),
+                            VehicleService.class)) {
+            // Not the service we are looking for
+            return;
+        }
+
+        if (event.getStatus() == ServiceEvent.Status.STOPPED) {
+            eventBus.post(new SnackbarNotificationEvent("Something went wrong",
+                                                        SnackbarNotificationEvent.Length.SHORT));
+        } else {
+            onRefreshListener.onRefresh();
+        }
+    }
 
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onEvent(RetrieveVehicleListResultEvent event) {
@@ -265,8 +296,10 @@ public class VehicleListVM
             // Not the latest event
             return;
         }
+        dismissProgressDialog();
         if (event.getResult() != RetrieveResultEvent.Result.SUCCESS) {
-            // Let context handle errors
+            eventBus.post(new SnackbarNotificationEvent(event.getErrorReason(),
+                                                        SnackbarNotificationEvent.Length.LONG));
             return;
         }
 
