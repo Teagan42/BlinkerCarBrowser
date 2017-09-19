@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="rocks.teagantotally.blinkercarbrowser.ui.vms.VehicleVM" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <rocks.teagantotally.blinkercarbrowser.ui.views.LoadingView
+            android:id="@+id/image_loading_view"
+            android:layout_width="360dp"
+            android:layout_height="270dp"
+            android:layout_gravity="center"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:loading="true">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                app:imageHeight="@{360}"
+                app:imageUrl="@{vm.imageUrl}"
+                app:imageWidth="@{270}" />
+
+        </rocks.teagantotally.blinkercarbrowser.ui.views.LoadingView>
+
+        <Button
+            android:id="@+id/more_details"
+            style="@style/PrimaryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:onClick="@{vm.moreDetailsClickListener}"
+            android:text="@string/more_details"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_loading_view"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

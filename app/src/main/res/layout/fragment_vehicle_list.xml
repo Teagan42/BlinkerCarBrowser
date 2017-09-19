@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="rocks.teagantotally.blinkercarbrowser.ui.vms.VehicleListVM" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:background="@android:color/darker_gray"
+        android:orientation="vertical">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/background_light"
+            android:hint="@string/search"
+            android:padding="4dp"
+            android:visibility="@{vm.searchBarVisibility}"
+            app:textChangeListener="@{vm.queryTextChangeListener}"
+            tools:visibility="visible" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@android:color/black"
+            android:visibility="@{vm.searchBarVisibility}"
+            tools:visibility="visible" />
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            app:refreshListener="@{vm.refreshListener}"
+            app:refreshing="@{vm.isRefreshing}">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/vehicle_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:animateLayoutChanges="false"
+                android:background="@android:color/darker_gray"
+                app:clickHandler="@{vm.itemClickHandler}"
+                app:itemViewBinder="@{vm.itemBinder}"
+                app:items="@{vm.items}"
+                app:layoutManager="@{vm.layoutManager}" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+    </LinearLayout>
+
+</layout>
