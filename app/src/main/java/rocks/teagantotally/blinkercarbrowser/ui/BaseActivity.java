@@ -44,6 +44,7 @@ import rocks.teagantotally.blinkercarbrowser.events.notifications.SnackbarNotifi
 import rocks.teagantotally.blinkercarbrowser.routing.Router;
 import rocks.teagantotally.blinkercarbrowser.ui.fragments.BaseFragment;
 import rocks.teagantotally.blinkercarbrowser.ui.fragments.BindableDialogFragment;
+import rocks.teagantotally.blinkercarbrowser.ui.fragments.VehicleListFragment;
 import rocks.teagantotally.blinkercarbrowser.ui.utils.KeyboardUtil;
 import rocks.teagantotally.blinkercarbrowser.ui.vms.BaseVM;
 
@@ -53,6 +54,7 @@ import rocks.teagantotally.blinkercarbrowser.ui.vms.BaseVM;
 
 public abstract class BaseActivity
           extends AppCompatActivity {
+    private static final Class defaultFragment = VehicleListFragment.class;
 
     /**
      * @return The top most activity
@@ -109,7 +111,12 @@ public abstract class BaseActivity
                                         binding.coordinatorLayout);
 
         Bundle args = getIntent().getExtras();
-        if (args != null && args.containsKey(Router.FRAGMENT) && args.get(Router.FRAGMENT) != null) {
+        if (args == null) {
+            args = new Bundle();
+            args.putSerializable(Router.FRAGMENT,
+                                 defaultFragment);
+        }
+        if (args.containsKey(Router.FRAGMENT) && args.get(Router.FRAGMENT) != null) {
             String tag = (String) args.get(Router.KEY);
             Class fragment = (Class) args.get(Router.FRAGMENT);
             try {
