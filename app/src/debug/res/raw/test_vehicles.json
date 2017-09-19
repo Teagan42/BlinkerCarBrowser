@@ -1,0 +1,15 @@
+ [{
+	"year": 2011,
+	"make": "Subaru",
+    "model": "Impreza",
+    "mileage": "81234",
+    "image_url": "http://blog.caranddriver.com/wp-content/uploads/2014/07/2013-Jeep-Wrangler-Unlimited-Rubicon-10th-Anniversary-Edition-PLACEMENT.jpg",
+    "created_at": "2016-10-19T03:13:22.586Z"
+}, {
+	"year": 2007,
+	"make": "Honda",
+    "model": "Element",
+    "mileage": "123456",
+    "image_url": "http://st.motortrend.com/uploads/sites/5/2012/07/2013-Audi-A5-front-three-quarter-in-motion.jpg",
+    "created_at": "2016-10-19T03:13:22.586Z"
+}]
