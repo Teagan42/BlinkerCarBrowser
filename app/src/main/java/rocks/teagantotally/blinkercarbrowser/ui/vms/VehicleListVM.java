@@ -14,7 +14,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -237,7 +236,7 @@ public class VehicleListVM
         if (!searchOptionsVM.shouldGroupResults()) {
             itemsToPopulate.addAll(vehicleVMs);
         } else {
-            Map<String, List<VehicleVM>> groupedVehicles = new TreeMap<>();
+            TreeMap<String, List<VehicleVM>> groupedVehicles = new TreeMap<>();
             // Group vehicles by year
             for (VehicleVM vehicleVM : vehicleVMs) {
                 String key = searchOptionsVM.getGroupByYear()
@@ -251,7 +250,9 @@ public class VehicleListVM
                                .add(vehicleVM);
             }
             // Add to list
-            for (String key : groupedVehicles.keySet()) {
+            for (String key : searchOptionsVM.getReverseGroups()
+                              ? groupedVehicles.descendingKeySet()
+                              : groupedVehicles.keySet()) {
                 itemsToPopulate.add(Injector.getViewModels()
                                             .getDivider()
                                             .setTitle(key));

@@ -20,6 +20,7 @@ public class SearchOptionsVM
     private boolean searchModel = true;
     private boolean groupByYear = false;
     private boolean groupByMake = false;
+    private boolean reverseGroups = false;
 
     /**
      * Create a new view model instance
@@ -137,6 +138,23 @@ public class SearchOptionsVM
         if (groupByMake) {
             groupByYear = false;
         }
+        notifyChange();
+    }
+
+    /**
+     * @return Whether to reverse groups
+     */
+    public boolean getReverseGroups() {
+        return reverseGroups;
+    }
+
+    /**
+     * Sets whether to reverse groups
+     *
+     * @param reverseGroups Whether to reverse groups
+     */
+    public void setReverseGroups(boolean reverseGroups) {
+        this.reverseGroups = reverseGroups;
         notifyChange();
     }
 
