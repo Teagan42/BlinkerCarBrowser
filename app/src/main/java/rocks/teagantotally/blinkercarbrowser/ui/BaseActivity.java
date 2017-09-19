@@ -111,7 +111,7 @@ public abstract class BaseActivity
                                         binding.coordinatorLayout);
 
         Bundle args = getIntent().getExtras();
-        if (args == null) {
+        if (args == null || !args.containsKey(Router.FRAGMENT)) {
             args = new Bundle();
             args.putSerializable(Router.FRAGMENT,
                                  defaultFragment);
