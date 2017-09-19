@@ -11,8 +11,8 @@
     </data>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <ProgressBar
             android:id="@+id/progress"
@@ -28,6 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_centerInParent="true"
             android:visibility="@{isLoading ? View.GONE : View.VISIBLE}">
 
         </LinearLayout>
