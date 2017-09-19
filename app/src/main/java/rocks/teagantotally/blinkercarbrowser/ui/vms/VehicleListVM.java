@@ -130,8 +130,7 @@ public class VehicleListVM
 
         retrieveVehicleListEvent = new RetrieveVehicleListEvent(0,
                                                                 LIMIT);
-        progressDialogNotificationEvent = new ProgressDialogNotificationEvent("Loading");
-        eventBus.post(progressDialogNotificationEvent);
+        showProgressDialog();
     }
 
     /**
@@ -260,6 +259,15 @@ public class VehicleListVM
 
         // Update recycler view items
         setItems(itemsToPopulate);
+    }
+
+    private void showProgressDialog() {
+        if (progressDialogNotificationEvent != null) {
+            return;
+        }
+
+        progressDialogNotificationEvent = new ProgressDialogNotificationEvent("Loading");
+        eventBus.post(progressDialogNotificationEvent);
     }
 
     private void dismissProgressDialog() {
