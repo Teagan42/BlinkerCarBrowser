@@ -16,7 +16,7 @@ import rocks.teagantotally.blinkercarbrowser.ui.binding.recyclerview.Conditional
  */
 
 @ViewScope
-public class YearDividerVM
+public class DividerVM
           extends BaseVM {
 
     public static final ConditionalItemBinder<BaseVM> itemBinder =
@@ -24,11 +24,11 @@ public class YearDividerVM
                                                 R.layout.item_year_divider) {
                   @Override
                   public boolean canBind(BaseVM item) {
-                      return item instanceof YearDividerVM;
+                      return item instanceof DividerVM;
                   }
               };
 
-    private String year;
+    private String title;
 
     /**
      * Create a new view model instance
@@ -36,30 +36,30 @@ public class YearDividerVM
      * @param eventBus Event bus to register with
      */
     @Inject
-    public YearDividerVM(EventBus eventBus) {
+    public DividerVM(EventBus eventBus) {
         super(eventBus);
     }
 
     /**
-     * Set the year
+     * Set the title
      *
-     * @param year Year text
+     * @param title Year text
      * @return This view model
      */
-    public YearDividerVM setYear(String year) {
-        if (TextUtils.equals(this.year,
-                             year)) {
+    public DividerVM setTitle(String title) {
+        if (TextUtils.equals(this.title,
+                             title)) {
             return this;
         }
-        this.year = year;
+        this.title = title;
         notifyChange();
         return this;
     }
 
     /**
-     * @return The year text
+     * @return The title text
      */
-    public String getYear() {
-        return year;
+    public String getTitle() {
+        return title;
     }
 }

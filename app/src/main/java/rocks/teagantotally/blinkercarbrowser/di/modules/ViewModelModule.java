@@ -7,11 +7,11 @@ import org.greenrobot.eventbus.EventBus;
 import dagger.Module;
 import dagger.Provides;
 import rocks.teagantotally.blinkercarbrowser.di.scopes.ViewScope;
+import rocks.teagantotally.blinkercarbrowser.ui.vms.DividerVM;
 import rocks.teagantotally.blinkercarbrowser.ui.vms.LoadMoreVM;
 import rocks.teagantotally.blinkercarbrowser.ui.vms.SearchOptionsVM;
 import rocks.teagantotally.blinkercarbrowser.ui.vms.VehicleListVM;
 import rocks.teagantotally.blinkercarbrowser.ui.vms.VehicleVM;
-import rocks.teagantotally.blinkercarbrowser.ui.vms.YearDividerVM;
 
 /**
  * Created by tglenn on 9/14/17.
@@ -62,15 +62,15 @@ public class ViewModelModule {
     }
 
     /**
-     * Creates a new year divider view model
+     * Creates a new divider view model
      *
      * @param eventBus Event bus to subscribe and post events to
-     * @return A new year divider view model
+     * @return A new divider view model
      */
     @Provides
     @ViewScope
-    public YearDividerVM getYearDivider(EventBus eventBus) {
-        return new YearDividerVM(eventBus);
+    public DividerVM getDivider(EventBus eventBus) {
+        return new DividerVM(eventBus);
     }
 
     /**

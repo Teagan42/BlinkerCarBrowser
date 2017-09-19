@@ -3,11 +3,11 @@ package rocks.teagantotally.blinkercarbrowser.di.components;
 import dagger.Subcomponent;
 import rocks.teagantotally.blinkercarbrowser.di.modules.ViewModelModule;
 import rocks.teagantotally.blinkercarbrowser.di.scopes.ViewScope;
+import rocks.teagantotally.blinkercarbrowser.ui.vms.DividerVM;
 import rocks.teagantotally.blinkercarbrowser.ui.vms.LoadMoreVM;
 import rocks.teagantotally.blinkercarbrowser.ui.vms.SearchOptionsVM;
 import rocks.teagantotally.blinkercarbrowser.ui.vms.VehicleListVM;
 import rocks.teagantotally.blinkercarbrowser.ui.vms.VehicleVM;
-import rocks.teagantotally.blinkercarbrowser.ui.vms.YearDividerVM;
 
 /**
  * Created by tglenn on 9/14/17.
@@ -32,9 +32,9 @@ public interface ViewModelComponent {
     LoadMoreVM getLoadMore();
 
     /**
-     * @return A new year divider view model
+     * @return A new divider view model
      */
-    YearDividerVM getYearDivider();
+    DividerVM getDivider();
 
     /**
      * @return A new search options view model

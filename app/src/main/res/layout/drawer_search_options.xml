@@ -104,6 +104,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/header_group_divider" />
 
+        <CheckBox
+            android:id="@+id/group_by_make"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="@={vm.groupByMake}"
+            android:text="@string/group_by_make"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/group_by_year" />
+
     </android.support.constraint.ConstraintLayout>
 
 </layout>

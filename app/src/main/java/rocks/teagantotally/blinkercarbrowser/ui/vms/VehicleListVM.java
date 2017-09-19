@@ -124,7 +124,7 @@ public class VehicleListVM
         setItemClickHandler(itemClickHandler);
         setItemBinder(new CompositeItemBinder<>(
                   LoadMoreVM.itemBinder,
-                  YearDividerVM.itemBinder,
+                  DividerVM.itemBinder,
                   VehicleVM.itemBinder
         ));
 
@@ -147,9 +147,11 @@ public class VehicleListVM
                       public void onPropertyChanged(Observable sender,
                                                     int propertyId) {
                           // Bubble the change up
-                          setShouldNotify(false);
-                          setQuery(query);
                           setShouldNotify(true);
+                          showProgressDialog();
+                          populateItems();
+                          dismissProgressDialog();
+                          setShouldNotify(false);
                       }
                   }
         );
@@ -196,6 +198,7 @@ public class VehicleListVM
                                                0,
                                                LIMIT);
         eventBus.post(retrieveVehicleListEvent);
+        showProgressDialog();
     }
 
     @Override
@@ -231,24 +234,27 @@ public class VehicleListVM
                   ? (LoadMoreVM) lastItem
                   : null;
 
-        if (!searchOptionsVM.getGroupByYear()) {
+        if (!searchOptionsVM.shouldGroupResults()) {
             itemsToPopulate.addAll(vehicleVMs);
         } else {
             Map<String, List<VehicleVM>> groupedVehicles = new TreeMap<>();
             // Group vehicles by year
             for (VehicleVM vehicleVM : vehicleVMs) {
-                if (!groupedVehicles.containsKey(vehicleVM.getYear())) {
-                    groupedVehicles.put(vehicleVM.getYear(),
+                String key = searchOptionsVM.getGroupByYear()
+                             ? vehicleVM.getYear()
+                             : vehicleVM.getMake();
+                if (!groupedVehicles.containsKey(key)) {
+                    groupedVehicles.put(key,
                                         new ArrayList<VehicleVM>());
                 }
-                groupedVehicles.get(vehicleVM.getYear())
+                groupedVehicles.get(key)
                                .add(vehicleVM);
             }
             // Add to list
             for (String key : groupedVehicles.keySet()) {
                 itemsToPopulate.add(Injector.getViewModels()
-                                            .getYearDivider()
-                                            .setYear(key));
+                                            .getDivider()
+                                            .setTitle(key));
                 itemsToPopulate.addAll(groupedVehicles.get(key));
             }
         }

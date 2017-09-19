@@ -19,6 +19,7 @@ public class SearchOptionsVM
     private boolean searchMake = true;
     private boolean searchModel = true;
     private boolean groupByYear = false;
+    private boolean groupByMake = false;
 
     /**
      * Create a new view model instance
@@ -113,7 +114,37 @@ public class SearchOptionsVM
      */
     public void setGroupByYear(boolean groupByYear) {
         this.groupByYear = groupByYear;
+        if (groupByYear) {
+            groupByMake = false;
+        }
         notifyChange();
+    }
+
+    /**
+     * @return Whether to group by make
+     */
+    public boolean getGroupByMake() {
+        return groupByMake;
+    }
+
+    /**
+     * Set whether to group by make
+     *
+     * @param groupByMake Whether to group by make
+     */
+    public void setGroupByMake(boolean groupByMake) {
+        this.groupByMake = groupByMake;
+        if (groupByMake) {
+            groupByYear = false;
+        }
+        notifyChange();
+    }
+
+    /**
+     * @return Whether to group results
+     */
+    public boolean shouldGroupResults() {
+        return groupByMake || groupByYear;
     }
 
     /**
