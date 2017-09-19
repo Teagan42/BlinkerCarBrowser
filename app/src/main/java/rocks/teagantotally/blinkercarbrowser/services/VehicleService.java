@@ -22,6 +22,7 @@ import rocks.teagantotally.blinkercarbrowser.datastore.VehicleQuery;
 import rocks.teagantotally.blinkercarbrowser.datastore.models.Vehicle;
 import rocks.teagantotally.blinkercarbrowser.di.Injector;
 import rocks.teagantotally.blinkercarbrowser.events.RetrieveResultEvent;
+import rocks.teagantotally.blinkercarbrowser.events.ServiceEvent;
 import rocks.teagantotally.blinkercarbrowser.events.vehicles.RetrieveVehicleResultEvent;
 import rocks.teagantotally.blinkercarbrowser.events.vehicles.list.RetrieveVehicleListEvent;
 import rocks.teagantotally.blinkercarbrowser.events.vehicles.list.RetrieveVehicleListResultEvent;
@@ -116,6 +117,8 @@ public class VehicleService
     public int onStartCommand(Intent intent,
                               int flags,
                               int startId) {
+        eventBus.postSticky(new ServiceEvent<>(ServiceEvent.Status.STARTED,
+                                               VehicleService.class));
         return Service.START_STICKY;
     }
 
@@ -125,6 +128,8 @@ public class VehicleService
         if (controller != null) {
             controller.unsubscribe();
         }
+        eventBus.postSticky(new ServiceEvent<>(ServiceEvent.Status.STOPPED,
+                                               VehicleService.class));
     }
 
     @Nullable
