@@ -285,7 +285,7 @@ public class VehicleListVM
             eventBus.post(new SnackbarNotificationEvent("Something went wrong",
                                                         SnackbarNotificationEvent.Length.SHORT));
         } else {
-            onRefreshListener.onRefresh();
+            eventBus.post(retrieveVehicleListEvent);
         }
     }
 
