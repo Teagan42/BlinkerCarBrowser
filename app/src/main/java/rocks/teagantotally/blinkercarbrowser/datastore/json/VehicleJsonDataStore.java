@@ -64,6 +64,12 @@ public class VehicleJsonDataStore
     public List<Vehicle> getVehicles(@IntRange(from = 0) int offset,
                                      @IntRange(from = 1) int limit) throws
                                                                     IOException {
+        if (offset < 0) {
+            throw new IllegalArgumentException("Offset must be a positive integer");
+        }
+        if (limit < 1) {
+            throw new IllegalArgumentException("Limit must be an integer 1 or greater");
+        }
         List<Vehicle> vehicles = loadJson();
 
         return vehicles.subList(Math.min(vehicles.size(),
@@ -85,6 +91,14 @@ public class VehicleJsonDataStore
                                        @IntRange(from = 0) int offset,
                                        @IntRange(from = 1) int limit) throws
                                                                       IOException {
+        Objects.requireNonNull(query,
+                               "Vehicle query cannot be null");
+        if (offset < 0) {
+            throw new IllegalArgumentException("Offset must be a positive integer");
+        }
+        if (limit < 1) {
+            throw new IllegalArgumentException("Limit must be an integer 1 or greater");
+        }
         List<Vehicle> vehicles = loadJson();
         if (!query.hasQuery()) {
             return vehicles.subList(Math.min(vehicles.size(),
