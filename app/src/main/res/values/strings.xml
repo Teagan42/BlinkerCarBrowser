@@ -1,13 +1,19 @@
 <resources>
-    <string name="app_name">Ibotta-Challenge</string>
+    <string name="app_name">Blinker Car Browser</string>
     <string name="toolbar_tag">rocks.teagantotally.android.toolbar</string>
     <string name="https">https</string>
-    <string name="date_time_format">MMM d, yyyy H:mm:ss a</string>
-    <string name="no_known_locations">No Known Locations</string>
-    <string name="locations">Locations</string>
-    <string name="latitude">Latitude:</string>
-    <string name="longitude">Longitude:</string>
-    <string name="offers">Offers</string>
-    <string name="no_current_offers">No Current Offers</string>
-    <string name="view_your_retailers">View Your Retailers!</string>
+    <string name="date_time_format">yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'</string>
+    <string name="miles">miles</string>
+    <string name="view_vehicles">View Vehicles</string>
+    <string name="vehicles">Vehicles</string>
+    <string name="open_drawer">Open Drawer</string>
+    <string name="close_drawer">Close Drawer</string>
+    <string name="show_search_bar">Show Search Bar</string>
+    <string name="search_vehicle_year">Search Vehicle Year</string>
+    <string name="search_vehicle_make">Search Vehicle Make</string>
+    <string name="search">Search</string>
+    <string name="search_model">Search Model</string>
+    <string name="display">Display</string>
+    <string name="group_by_year">Group by Year</string>
+    <string name="more_details">More Details</string>
 </resources>
