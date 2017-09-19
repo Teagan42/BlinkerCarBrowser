@@ -1,11 +1,18 @@
 package rocks.teagantotally.blinkercarbrowser.services;
 
+import android.support.annotation.IntRange;
+
 import org.greenrobot.eventbus.EventBus;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.EnumSet;
+import java.util.List;
 
+import rocks.teagantotally.blinkercarbrowser.R;
+import rocks.teagantotally.blinkercarbrowser.datastore.json.VehicleJsonDataStore;
+import rocks.teagantotally.blinkercarbrowser.datastore.models.Vehicle;
 import rocks.teagantotally.blinkercarbrowser.di.Injector;
 import rocks.teagantotally.blinkercarbrowser.di.components.DaggerApplicationComponent;
 import rocks.teagantotally.blinkercarbrowser.di.modules.TestDataStoreModule;
@@ -47,6 +54,9 @@ public class VehicleServiceTest {
         private void validateEvent(RetrieveVehicleListResultEvent event) {
             assertEquals(this.expectedResults.result,
                          event.getResult());
+            if (this.expectedResults.result == RetrieveResultEvent.Result.ERROR) {
+                return;
+            }
             assertEquals(this.expectedResults.count,
                          event.getResults()
                               .size());
@@ -184,6 +194,55 @@ public class VehicleServiceTest {
                                       new String[]{
                                                 "Subaru"
                                       });
+        eventBus.setExpectedResults(expectedResults);
+        controller.onEvent(event);
+    }
+
+    @Test
+    public void queryWithNoResults() {
+        RetrieveVehicleListEvent event =
+                  new RetrieveVehicleListEvent(EnumSet.allOf(RetrieveVehicleListEvent.QueryType.class),
+                                               "2049",
+                                               0,
+                                               10);
+        ExpectedResults expectedResults =
+                  new ExpectedResults(RetrieveResultEvent.Result.SUCCESS,
+                                      0,
+                                      new String[0]);
+        eventBus.setExpectedResults(expectedResults);
+        controller.onEvent(event);
+    }
+
+    @Test
+    public void retrieveWithError() {
+        VehicleJsonDataStore dataStore =
+                  new VehicleJsonDataStore(Injector.get()
+                                                   .applicationContext(),
+                                           eventBus,
+                                           R.raw.test_vehicles) {
+                      /**
+                       * QueryType vehicles
+                       *
+                       * @param offset Number of records to skip
+                       * @param limit  Maximum number of records to return
+                       * @return The result of the query
+                       */
+                      @Override
+                      public List<Vehicle> getVehicles(@IntRange(from = 0) int offset,
+                                                       @IntRange(from = 1) int limit) throws
+                                                                                      IOException {
+                          throw new IOException("Network Error");
+                      }
+                  };
+        controller = new VehicleService.Controller(eventBus,
+                                                   dataStore);
+        RetrieveVehicleListEvent event =
+                  new RetrieveVehicleListEvent(0,
+                                               10);
+        ExpectedResults expectedResults =
+                  new ExpectedResults(RetrieveResultEvent.Result.ERROR,
+                                      0,
+                                      new String[0]);
         eventBus.setExpectedResults(expectedResults);
         controller.onEvent(event);
     }
