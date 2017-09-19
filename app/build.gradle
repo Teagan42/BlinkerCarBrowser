@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     buildToolsVersion "26.0.1"
     defaultConfig {
-        applicationId "rocks.teagantotally.ibotta_challenge"
+        applicationId "rocks.teagantotally.blinkercarbrowser"
         minSdkVersion 24
         targetSdkVersion 26
         versionCode 1
