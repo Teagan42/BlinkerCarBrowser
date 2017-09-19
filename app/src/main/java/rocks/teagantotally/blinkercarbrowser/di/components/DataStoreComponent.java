@@ -1,5 +1,8 @@
 package rocks.teagantotally.blinkercarbrowser.di.components;
 
+import android.support.annotation.RawRes;
+
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -23,4 +26,11 @@ public interface DataStoreComponent {
      * @return The current implementation of the vehicle data store
      */
     VehicleDataStore getVehicleDataStore();
+
+    /**
+     * @return The resource identifier for vehicle json file
+     */
+    @Named("Vehicles")
+    @RawRes
+    int vehicleDataJsonFileResourceIdentifer();
 }

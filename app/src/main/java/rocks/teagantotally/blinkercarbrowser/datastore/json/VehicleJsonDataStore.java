@@ -3,6 +3,7 @@ package rocks.teagantotally.blinkercarbrowser.datastore.json;
 import android.content.Context;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
+import android.support.annotation.RawRes;
 import android.util.Log;
 
 import org.greenrobot.eventbus.EventBus;
@@ -13,10 +14,10 @@ import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
-import rocks.teagantotally.blinkercarbrowser.R;
 import rocks.teagantotally.blinkercarbrowser.datastore.VehicleDataStore;
 import rocks.teagantotally.blinkercarbrowser.datastore.VehicleQuery;
 import rocks.teagantotally.blinkercarbrowser.datastore.models.Vehicle;
@@ -32,18 +33,22 @@ public class VehicleJsonDataStore
 
     private Context context;
     private EventBus eventBus;
+    @RawRes
+    private int jsonFileResourceId;
 
     @Inject
     public VehicleJsonDataStore(Context context,
-                                EventBus eventBus) {
+                                EventBus eventBus,
+                                @RawRes int jsonFileResourceId) {
         this.context = context;
         this.eventBus = eventBus;
+        this.jsonFileResourceId = jsonFileResourceId;
     }
 
     private List<Vehicle> loadJson() throws
                                      IOException {
         Vehicle[] vehicles = JsonHelper.loadJson(context,
-                                                 R.raw.vehicles,
+                                                 jsonFileResourceId,
                                                  Vehicle[].class);
         return new LinkedList<>(Arrays.asList(vehicles));
     }
