@@ -23,7 +23,7 @@ Querying is done through reflection, this is to help facilitate adding new field
 For example, if new requirements come in that say the user should be able to query the type of vehicle (SUV, sedan, motorcycle, etc.) you simply need to add the new field name to the `rocks.teagantotally.blinkercarbrowser.datastore.VehicleQuery` class - make sure this field matches the `rocks.teagantotally.blinkercarbrowser.datastore.models.Vehicle` field.
 
 ## Services
-Services are started when the application is attached to the base context. Services should fire a `ServiceEvent` for start and stop status. This way the application can wait until the services needed are running before trying to perform logic.
+Services are started when a fragment overrides the `requiredServices` method, returning an array of service classes needed to run the fragment. Services should fire a `ServiceEvent` for start and stop status. This way the application can wait until the services needed are running before trying to perform logic.
 
 ## Routing
 This application has a single screen, but the router is added for future improvements. The router uses URIs mapped to an activity and a fragment - this allows for a LoggedInActivity (which can listen for UserLoggedOutEvent or similar) and a LoggedOutActivity for example.
