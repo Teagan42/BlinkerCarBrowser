@@ -84,6 +84,8 @@ public class VehicleServiceTest {
 
         eventBus = (TestEventBus) Injector.get()
                                           .eventBus();
+        // Service controllers are singletons - should not be injected or there will be cross test
+        // effects
         controller = new VehicleService.Controller(eventBus,
                                                    Injector.get()
                                                            .getVehicleDataStore());
