@@ -1,7 +1,10 @@
 package rocks.teagantotally.blinkercarbrowser.datastore.json;
 
+import android.support.test.runner.AndroidJUnit4;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
@@ -21,7 +24,7 @@ import static junit.framework.Assert.fail;
  * Created by tglenn on 9/19/17.
  */
 
-
+@RunWith(AndroidJUnit4.class)
 public class VehicleJsonDataStoreTest {
     static final int testVehicleCount = 2;
 
