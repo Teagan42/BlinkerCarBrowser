@@ -19,6 +19,7 @@ import rocks.teagantotally.blinkercarbrowser.databinding.FragmentVehicleListBind
 import rocks.teagantotally.blinkercarbrowser.datastore.VehicleDataStore;
 import rocks.teagantotally.blinkercarbrowser.di.Injector;
 import rocks.teagantotally.blinkercarbrowser.events.ErrorEvent;
+import rocks.teagantotally.blinkercarbrowser.services.VehicleService;
 import rocks.teagantotally.blinkercarbrowser.ui.vms.VehicleListVM;
 
 /**
@@ -33,6 +34,13 @@ public class VehicleListFragment
 
     @Inject
     VehicleDataStore vehicleDataStore;
+
+    @Override
+    protected Class[] requiredServices() {
+        return new Class[]{
+                  VehicleService.class
+        };
+    }
 
     @Nullable
     @Override

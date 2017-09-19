@@ -1,5 +1,6 @@
 package rocks.teagantotally.blinkercarbrowser.ui.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -36,6 +37,10 @@ public abstract class BaseFragment
 
     protected boolean isPaused() {
         return isPaused;
+    }
+
+    protected Class[] requiredServices() {
+        return new Class[0];
     }
 
     public boolean shouldEnableKeyboardLayoutListener() {
@@ -82,6 +87,10 @@ public abstract class BaseFragment
         }
 
         setRetainInstance(true);
+        for (Class serviceClass : requiredServices()) {
+            getActivity().startService(new Intent(getContext(),
+                                                  serviceClass));
+        }
     }
 
     /**
